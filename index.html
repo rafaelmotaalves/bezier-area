@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Canvas Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 </head>
+
 <body>
     <header>
         <h2>BEZIER CURVE AREA</h2>
-        <label for="size">Box size</label>
-        <input name="size" type="number" min=0 onchange="resizeCanvas()">
 
-        <label for="degree">Curve degree</label>
-        <input name="degree" type="number" min=1 onchange="calculatePoints()">
+        <span class="input">
+            <label for="size">Box size</label>
+            <div class="ui input">
+                <input name="size" type="number" min=0 onchange="resizeCanvas()">
+            </div>
+        </span>
+
+        <span class="input">
+            <label for="degree">Curve degree</label>
+            <select name="degree" class="ui dropdown" onchange="calculatePoints()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
+        </span>
     </header>
 
     <div id='container'>
         <canvas id='canvas'>
         </canvas>
     </div>
-    
+
     <script src="main.js"></script>
 </body>
+
 </html>

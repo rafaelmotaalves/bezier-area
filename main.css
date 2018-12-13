@@ -1,6 +1,5 @@
 html, body, h2 {
     margin: 0 !important;
-    padding: 0 !important;
 }
 
 body {
@@ -17,16 +16,15 @@ body {
     align-items: center;
 }
 
-header {
-    height: 100px;
-    color: white;
-    background-color: #001d4c;
-    width: 100%;
-    margin-bottom: 20px;
-    margin-top: 0;
+.input {
+    width:100px;
+    padding: 10px;
 }
 
-header input {
-    margin-top: 20px;
-    width: 60px;
+header {
+    color: white;
+    background-color: #001d4c;
+    margin-bottom: 20px;
+    margin-top: 0;
+    width: 100%;
 }
