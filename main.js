@@ -39,7 +39,7 @@ const getSelectedPoint = (click) => {
 const calculatePoints = () => {
     state.degree = parseInt(document.querySelector('select[name="degree"]').value);
     state.points = Array(state.degree).fill(0).map(
-        (elem, i) => ({ x: (i + 0.5) * (state.size / state.degree), y: state.size / 2, radius: 5})
+        (_, i) => ({ x: i * (state.size / (state.degree - 1)), y: state.size / 2, radius: 5})
     )
     drawPoints();
 }
