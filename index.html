@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Canvas Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+
+</head>
+<body>
+    <header>
+        <h2>BEZIER CURVE AREA</h2>
+        <label for="size">Box size</label>
+        <input name="size" type="number" min=0 onchange="resizeCanvas()">
+
+        <label for="degree">Curve degree</label>
+        <input name="degree" type="number" min=1 onchange="calculatePoints()">
+    </header>
+
+    <div id='container'>
+        <canvas id='canvas'>
+        </canvas>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>

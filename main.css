@@ -1,0 +1,32 @@
+html, body, h2 {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body {
+    background-color: grey;
+}
+
+#canvas {
+    background-color: black;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    height: 100px;
+    color: white;
+    background-color: #001d4c;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+header input {
+    margin-top: 20px;
+    width: 60px;
+}
