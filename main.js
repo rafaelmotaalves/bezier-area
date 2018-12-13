@@ -37,9 +37,9 @@ const getSelectedPoint = (click) => {
 }
 
 const calculatePoints = () => {
-    state.degree = parseInt(document.querySelector('input[name="degree"]').value);
+    state.degree = parseInt(document.querySelector('select[name="degree"]').value);
     state.points = Array(state.degree).fill(0).map(
-        () => ({ x: Math.random() * state.size, y: Math.random() * state.size, radius: 5})
+        (elem, i) => ({ x: (i + 0.5) * (state.size / state.degree), y: state.size / 2, radius: 5})
     )
     drawPoints();
 }
@@ -68,7 +68,7 @@ canvas.addEventListener('mouseup', function (e) {
     state.selectedPoint = null;
 });
 
-document.querySelector('input[name="degree"]').value = 2;
+document.querySelector('select[name="degree"]').value = 2;
 document.querySelector('input[name="size"]').value = 500;
 resizeCanvas();
 calculatePoints();
