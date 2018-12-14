@@ -64,9 +64,16 @@ const drawArea = () => {
     bezierPoints.forEach(
         (elem, index, arr) => {
             if (index < arr.length - 1) {
-                ctx.fillRect(elem.x, elem.y, arr[index + 1].x - elem.x, state.size - elem.y);
                 ctx.moveTo(elem.x, elem.y);
                 ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
+                ctx.moveTo(arr[index + 1].x, arr[index + 1].y);
+                ctx.lineTo(arr[index + 1].x, state.size);
+                ctx.moveTo(arr[index + 1].x, state.size);
+                ctx.lineTo(elem.x, state.size);
+                ctx.moveTo(elem.x, state.size);
+                ctx.lineTo(elem.x, elem.y);
+                ctx.closePath();
+                ctx.fill();
             }
         }
     )
