@@ -1,12 +1,16 @@
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+const STEP_SIZE = 100;
+
 const state = {
-    size: 5,
-    degree: 2,
+    size: 500,
+    degree: 1,
     points: [],
     selectedPoint: null
 }
+
 
 const cleanCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -17,11 +21,13 @@ const resizeCanvas = () => {
 }
 
 const drawPoint = (x, y, radius) => {
+    ctx.strokeStyle = "blue";
+    ctx.fillStyle = 'blue';
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.stroke();
-    ctx.fillStyle = 'blue';
     ctx.fill();
+    ctx.closePath();
 }
 
 const isInCircle = (circle, click) => {
@@ -37,16 +43,34 @@ const getSelectedPoint = (click) => {
 }
 
 const calculatePoints = () => {
-    state.degree = parseInt(document.querySelector('select[name="degree"]').value);
+    cleanCanvas();
+    state.degree = parseInt(document.querySelector('select[name="degree"]').value) + 1;
     state.points = Array(state.degree).fill(0).map(
-        (_, i) => ({ x: i * (state.size / (state.degree - 1)), y: state.size / 2, radius: 5})
+        (_, i) => ({ x: i * (state.size / (state.degree - 1)), y: state.size / 2, radius: 10 })
     )
     drawPoints();
 }
 
 const drawPoints = () => {
-    cleanCanvas();
-    state.points.forEach(({ x, y, radius}) => drawPoint(x, y, radius));
+    state.points.forEach(({ x, y, radius }) => drawPoint(x, y, radius));
+}
+
+const drawArea = () => {
+    const bezierPoints = bezier_points(state.points);
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 10;
+    bezierPoints.forEach(
+        (elem, index, arr) => {
+            if (index < arr.length - 1) {
+                ctx.fillRect(elem.x, elem.y, arr[index + 1].x - elem.x, state.size - elem.y);
+                ctx.moveTo(elem.x, elem.y);
+                ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
+            }
+        }
+    )
+    ctx.stroke();
 }
 
 
@@ -60,15 +84,19 @@ canvas.addEventListener('mousedown', function (e) {
 canvas.addEventListener('mousemove', function (e) {
     if (state.selectedPoint) {
         state.selectedPoint.y = e.offsetY;
+        cleanCanvas();
+        drawArea();
         drawPoints();
     }
 });
+
 
 canvas.addEventListener('mouseup', function (e) {
     state.selectedPoint = null;
 });
 
-document.querySelector('select[name="degree"]').value = 2;
-document.querySelector('input[name="size"]').value = 500;
+
+document.querySelector('select[name="degree"]').value = state.degree;
+document.querySelector('input[name="size"]').value = state.size;
 resizeCanvas();
 calculatePoints();
