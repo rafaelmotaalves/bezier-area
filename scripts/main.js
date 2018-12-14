@@ -57,27 +57,22 @@ const drawPoints = () => {
 
 const drawArea = () => {
     const bezierPoints = bezier_points(state.points);
+    const f = bezierPoints[0];
     ctx.beginPath();
     ctx.fillStyle = "red";
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 10;
+    ctx.moveTo(f.x, f.y);
     bezierPoints.forEach(
         (elem, index, arr) => {
-            if (index < arr.length - 1) {
-                ctx.moveTo(elem.x, elem.y);
-                ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
-                ctx.moveTo(arr[index + 1].x, arr[index + 1].y);
-                ctx.lineTo(arr[index + 1].x, state.size);
-                ctx.moveTo(arr[index + 1].x, state.size);
-                ctx.lineTo(elem.x, state.size);
-                ctx.moveTo(elem.x, state.size);
+            if (index > 0) {
                 ctx.lineTo(elem.x, elem.y);
-                ctx.closePath();
-                ctx.fill();
             }
-        }
-    )
-    ctx.stroke();
+        })
+        ctx.lineTo(state.size , state.size);
+        ctx.lineTo(0, state.size);
+        ctx.lineTo(f.x, f.y)
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
 }
 
 
