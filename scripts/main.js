@@ -96,7 +96,15 @@ canvas.addEventListener('mouseup', function (e) {
 });
 
 
-document.querySelector('select[name="degree"]').value = state.degree;
-document.querySelector('input[name="size"]').value = state.size;
+const drawLine = (pointA, pointB) => {
+    ctx.beginPath();
+    ctx.moveTo(pointA.x, pointA.y);
+    ctx.lineTo(pointB.x, pointB.y);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+}
+
+document.querySelector('select[name="degree"]').value = 1;
+document.querySelector('input[name="size"]').value = 500;
 resizeCanvas();
 calculatePoints();
