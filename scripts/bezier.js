@@ -1,7 +1,7 @@
 
 const bezier_points = (points) => {
-    return Array(STEP_SIZE + 1).fill(0).map(
-        (_, index) => berstein_bezier(points, (index) / STEP_SIZE) 
+    return Array(state.stepSize + 1).fill(0).map(
+        (_, index) => berstein_bezier(points, (index) / state.stepSize) 
     )
 }
 

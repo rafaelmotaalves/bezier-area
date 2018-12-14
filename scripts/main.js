@@ -2,33 +2,53 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const STEP_SIZE = 100;
 
 const state = {
     size: 500,
     degree: 1,
     points: [],
-    selectedPoint: null
+    curvePoints: [],
+    selectedPoint: null,
+    stepSize: 100,
+    generator: 1,
+    markPoints: false,
 }
 
+const changeStepSize = () => {
+    state.stepSize = parseInt(document.querySelector('input[name="stepSize"]').value);
+    calculatePoints();
+}
 
-const cleanCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+const changeGenerator = () => {
+    state.generator = parseInt(document.querySelector('select[name="generator"]').value);
+    calculatePoints();
+}
+
+const changeMarkPoints = () => {
+    state.markPoints = document.querySelector('input[name="markPoints"]').value == 'on';
+    calculatePoints();
+}
 
 const resizeCanvas = () => {
-    state.size = document.querySelector('input[name="size"]').value;
+    state.size = parseInt(document.querySelector('input[name="size"]').value);
     canvas.width = canvas.height = state.size;
     calculatePoints();
 }
 
-const drawPoint = (x, y, radius) => {
+const cleanCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+const drawPoint = (x, y, radius, color) => {
     ctx.strokeStyle = "blue";
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
 }
+
+
 
 const isInCircle = (circle, click) => {
     var v = {
@@ -44,7 +64,7 @@ const getSelectedPoint = (click) => {
 
 const calculatePoints = () => {
     cleanCanvas();
-    state.degree = parseInt(document.querySelector('select[name="degree"]').value) + 1;
+    state.degree = parseInt(document.querySelector('input[name="degree"]').value) + 1;
     state.points = Array(state.degree).fill(0).map(
         (_, i) => ({ x: i * (state.size / (state.degree - 1)), y: state.size / 2, radius: 10 })
     )
@@ -52,11 +72,14 @@ const calculatePoints = () => {
 }
 
 const drawPoints = () => {
-    state.points.forEach(({ x, y, radius }) => drawPoint(x, y, radius));
+    state.points.forEach(({ x, y, radius }) => drawPoint(x, y, radius, 'blue'));
 }
 
 const drawArea = () => {
     const bezierPoints = bezier_points(state.points);
+    state.curvePoints = bezierPoints;
+
+    console.log(state)
     const f = bezierPoints[0];
     ctx.beginPath();
     ctx.fillStyle = "red";
@@ -67,12 +90,15 @@ const drawArea = () => {
                 ctx.lineTo(elem.x, elem.y);
             }
         })
-        ctx.lineTo(state.size , state.size);
-        ctx.lineTo(0, state.size);
-        ctx.lineTo(f.x, f.y)
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
+    ctx.lineTo(state.size, state.size);
+    ctx.lineTo(0, state.size);
+    ctx.lineTo(f.x, f.y)
+    ctx.closePath();
+    ctx.fill();
+    if (state.markPoints) {
+        bezierPoints.forEach(({ x, y }) => drawPoint(x, y, 5, 'green'))
+    }
+
 }
 
 
@@ -106,7 +132,10 @@ const drawLine = (pointA, pointB) => {
     ctx.stroke();
 }
 
-document.querySelector('select[name="degree"]').value = 1;
-document.querySelector('input[name="size"]').value = 500;
+document.querySelector('select[name="generator"]').value = state.generator;
+document.querySelector('input[name="degree"]').value = state.degree;
+document.querySelector('input[name="size"]').value = state.size;
+document.querySelector('input[name="stepSize"]').value = state.stepSize;
+
 resizeCanvas();
 calculatePoints();
