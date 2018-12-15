@@ -25,8 +25,9 @@ const changeGenerator = () => {
 }
 
 const changeMarkPoints = () => {
-    state.markPoints = document.querySelector('input[name="markPoints"]').value == 'on';
+    state.markPoints = !state.markPoints;
     calculatePoints();
+    console.log(state)
 }
 
 const resizeCanvas = () => {
@@ -47,8 +48,6 @@ const drawPoint = (x, y, radius, color) => {
     ctx.fill();
     ctx.closePath();
 }
-
-
 
 const isInCircle = (circle, click) => {
     var v = {
@@ -78,14 +77,12 @@ const drawPoints = () => {
 const drawArea = () => {
     const bezierPoints = bezier_points(state.points);
     state.curvePoints = bezierPoints;
-
-    console.log(state)
     const f = bezierPoints[0];
     ctx.beginPath();
     ctx.fillStyle = "red";
     ctx.moveTo(f.x, f.y);
     bezierPoints.forEach(
-        (elem, index, arr) => {
+        (elem, index) => {
             if (index > 0) {
                 ctx.lineTo(elem.x, elem.y);
             }
